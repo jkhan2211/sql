@@ -65,14 +65,14 @@ If they move, the old address is replaced with the new one:
 
 Propsed Tables
 
-CUSTOMER
+CUSTOMER- Table
 ---------
 Customer_id (PK)
 First_Name
 Last_Name
 ...
 
-CUSTOMER_ADDRESS
+CUSTOMER_ADDRESS- Table
 ----------------
 Customer_id (PK, FK → CUSTOMER)
 Street
@@ -86,16 +86,16 @@ Here whenever the customer changes address, we create a new row for the same cus
 
 Propsed Tables
 
-CUSTOMER
+CUSTOMER- Table
 ---------
 Customer_id (PK)
 First_Name
 Last_Name
 ...
 
-CUSTOMER_ADDRESS
+CUSTOMER_ADDRESS- Table
 ----------------
-CustomerAddress_id (PK)        -- surrogate key
+CustomerAddress_id (PK)
 Customer_id (FK → CUSTOMER)
 Street
 City
@@ -109,11 +109,12 @@ Is_Current (Y/N)
 Notes:
 Each customer can have multiple addresses over time.
 
-Start_Date / End_Date (or Is_Current) tells you which address is active.
+Start_Date / End_Date - Represents the date of which the address is active
+(or Is_Current) tells you which address is active.
 
 If the customer moves, you add a new row with a new CustomerAddress_id.
 
-Orders can reference the correct historical address at the time they were placed.
+This way, book orders can reference the correct historical address at the time they were placed.
 
 ```
 
