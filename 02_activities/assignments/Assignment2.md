@@ -44,17 +44,78 @@ Additionally, include a date table.
 There are several tools online you can use, I'd recommend [Draw.io](https://www.drawio.com/) or [LucidChart](https://www.lucidchart.com/pages/).
 
 **HINT:** You do not need to create any data for this prompt. This is a logical model (ERD) only. 
+```
+see: logical_diagram_section1_1.jpg
+```
 
 #### Prompt 2
 We want to create employee shifts, splitting up the day into morning and evening. Add this to the ERD.
-
+```
+see: logical_diagram_section1_2.jpg
+```
 #### Prompt 3
 The store wants to keep customer addresses. Propose two architectures for the CUSTOMER_ADDRESS table, one that will retain changes, and another that will overwrite. Which is type 1, which is type 2? 
 
 **HINT:** search type 1 vs type 2 slowly changing dimensions. 
 
 ```
-Your answer...
+Option 1- Overwrite (Type 1)
+Here the customer will have only one address stored. 
+If they move, the old address is replaced with the new one:
+
+Propsed Tables
+
+CUSTOMER- Table
+---------
+Customer_id (PK)
+First_Name
+Last_Name
+...
+
+CUSTOMER_ADDRESS- Table
+----------------
+Customer_id (PK, FK → CUSTOMER)
+Street
+City
+Province
+Postal_Code
+Country
+
+Option 2- Retain Changes (Type 2)
+Here whenever the customer changes address, we create a new row for the same customer 
+
+Propsed Tables
+
+CUSTOMER- Table
+---------
+Customer_id (PK)
+First_Name
+Last_Name
+...
+
+CUSTOMER_ADDRESS- Table
+----------------
+CustomerAddress_id (PK)
+Customer_id (FK → CUSTOMER)
+Street
+City
+Province
+Postal_Code
+Country
+Start_Date
+End_Date
+Is_Current (Y/N)
+
+Notes:
+Each customer can have multiple addresses over time.
+
+Start_Date / End_Date - Represents the date of which the address is active
+(or Is_Current) tells you which address is active.
+
+If the customer moves, you add a new row with a new CustomerAddress_id.
+
+This way, book orders can reference the correct historical address at the time they were placed.
+
 ```
 
 ***
